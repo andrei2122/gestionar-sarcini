@@ -11,9 +11,12 @@
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
         <span class="navbar-brand fw-bold">Gestionar de sarcini</span>
-        <div id="info-utilizator" class="d-none align-items-center gap-3">
-            <span id="email-utilizator" class="text-white small"></span>
-            <button class="btn btn-outline-light btn-sm" onclick="deconecteaza()">Deconectare</button>
+        <div class="d-flex align-items-center gap-3">
+            <a href="#" class="text-white small text-decoration-none" onclick="arataDespre(); return false;">Despre mine</a>
+            <div id="info-utilizator" class="d-none align-items-center gap-3">
+                <span id="email-utilizator" class="text-white small"></span>
+                <button class="btn btn-outline-light btn-sm" onclick="deconecteaza()">Deconectare</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -96,6 +99,33 @@
         <div id="lista-sarcini"></div>
 
     </div>
+
+    <!-- -------- Sectiunea "Despre mine" -------- -->
+    <div id="sectiune-about" class="d-none">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Despre mine</h5>
+                        <p class="mb-2"><strong>Nume:</strong> Andrei Calancea</p>
+                        <p class="mb-2"><strong>Facultate:</strong> Facultatea de Inginerie Electrică și Știința Calculatoarelor</p>
+                        <p class="mb-2"><strong>Specializare:</strong> Rețele de comunicații și calculatoare</p>
+                        <p class="mb-3"><strong>An universitar:</strong> 2025 - 2026</p>
+                        <hr>
+                        <p class="text-muted">
+                            Sunt student la specializarea Rețele de comunicații și calculatoare. Această aplicație
+                            este un gestionar de sarcini dezvoltat pe parcursul laboratoarelor: pe partea de server
+                            folosește FastAPI și o bază de date SQLite, cu autentificare prin token-uri JWT, iar
+                            interfața web este construită cu Bootstrap și JavaScript. Proiectul acoperă întregul flux,
+                            de la API și bază de date, până la interfața web și publicarea aplicației pe internet.
+                        </p>
+                        <button class="btn btn-primary" onclick="inchideDespre()">Înapoi la aplicație</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -109,6 +139,8 @@
     function deconecteaza() { localStorage.removeItem("token"); actualizeazaUI(); }
 
     function actualizeazaUI() {
+        // ascundem mereu pagina "Despre mine" cand schimbam starea
+        document.getElementById("sectiune-about").classList.add("d-none");
         const token = obtineToken();
         if (token) {
             document.getElementById("sectiune-auth").classList.add("d-none");
@@ -126,6 +158,19 @@
             document.getElementById("info-utilizator").classList.add("d-none");
             document.getElementById("info-utilizator").classList.remove("d-flex");
         }
+    }
+
+    // -------- Navigare "Despre mine" --------
+
+    function arataDespre() {
+        document.getElementById("sectiune-auth").classList.add("d-none");
+        document.getElementById("sectiune-sarcini").classList.add("d-none");
+        document.getElementById("sectiune-about").classList.remove("d-none");
+    }
+
+    function inchideDespre() {
+        document.getElementById("sectiune-about").classList.add("d-none");
+        actualizeazaUI();
     }
 
     function comutaFormular() {
